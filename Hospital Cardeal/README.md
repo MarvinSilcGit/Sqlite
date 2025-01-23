@@ -1,4 +1,4 @@
-# EMR DIAGRAM
+# EMR Diagram
 
 
 ```mermaid
