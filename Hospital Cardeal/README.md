@@ -190,19 +190,21 @@ insumo{
     
     codigo_barras TEXT PK
     data_validade TEXT
+    data_fabricacao TEXT
     nome_fornecedor TEXT
-    cnpj_fornecedor TEXT FK
     preco REAL
     nome TEXT
     quantidade INTEGER
+    cnpj_fornecedor TEXT FK
+    nome_departamento TEXT FK
 }
 
 hospital_cardeal ||--|| diretor_hospital: Tem
 hospital_cardeal ||--|{ departamento: Tem
 hospital_cardeal ||--|{ fornecedor: Contrata
-fornecedor }|--|{ insumo: Fornece
-diretor_hospital ||--|{ diretor_departamento: Comanda_muitos
-diretor_departamento ||--|| departamento: comanda_um
+fornecedor ||--|{ insumo: Fornece
+diretor_hospital ||--|{ diretor_departamento: Comanda
+diretor_departamento ||--|| departamento: Comanda
 departamento ||--|{ insumo: Possui
 departamento ||--|{ medico: Contrata
 departamento ||--|{ enfermeiro: Contrata
