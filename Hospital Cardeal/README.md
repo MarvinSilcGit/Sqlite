@@ -2,65 +2,63 @@
 
 
 ```mermaid
----
-
----
 erDiagram
 
 
 hospital_cardeal{ 
     
-    cnpj FLOAT PK
+    cnpj_hospital TEXT PK
     logradouro TEXT
     municipio TEXT
     complemento TEXT
     cep TEXT
     bairro TEXT
     numero TEXT
-    razao_social TEXT
-    nome_fantasia TEXT
     telefone TEXT
     email TEXT
     quantidade_departamento INTEGER
- 
+    razao_social TEXT
+    nome_fantasia TEXT
+    cnpj_fornecedor TEXT FK
+    cpf_diretor TEXT FK
+
 }
 
 fornecedor{ 
     
-    cnpj FLOAT PK
+    cnpj_fornecedor TEXT PK
     logradouro TEXT
     municipio TEXT
     complemento TEXT
     cep TEXT
     bairro TEXT
     numero TEXT
-    razao_social TEXT
-    nome_fantasia TEXT
     telefone TEXT
-    codigo_natureza_juridica TEXT
-    codigo_atividade_economica TEXT
     email TEXT
     porte TEXT
+    razao_social TEXT
+    nome_fantasia TEXT
+    codigo_natureza_juridica TEXT
+    codigo_atividade_economica TEXT
  
 }
 
 diretor_hospital{
 		
-    cpf TEXT PK
+    cpf_diretor TEXT PK
     nome TEXT
-    data_nascimento TEXT
     salario REAL
     cnis TEXT
     email TEXT
     endereco TEXT
-		
+	data_nascimento TEXT
+
 }
 
 departamento{
-		
-    departamento_id INTEGER PK
-    orcamento FLOAT
-    nome TEXT
+	
+    nome_departamento TEXT PK
+    orcamento REAL
     diretor_departamento TEXT
     quantidade_funcionarios INTEGER
 		
@@ -68,13 +66,13 @@ departamento{
 
 diretor_departamento{
     
-    cpf TEXT PK
+    cpf_diretor_departamento TEXT
     nome TEXT
-    data_nascimento TEXT
     salario REAL
     cnis TEXT
     email TEXT
     endereco TEXT
+    data_nascimento TEXT
     
 }
 
@@ -162,13 +160,14 @@ auxiliar_limpeza{
  
     cpf TEXT PK
     nome TEXT
-    data_nascimento TEXT   
     cnis TEXT
     salario REAL
     email TEXT
     endereco TEXT
+    data_nascimento TEXT
     genero_sexual TEXT
     carga_horaria_semanal INTEGER
+    tipo_funcao TEXT
 
 }
 
@@ -176,38 +175,40 @@ auxiliar_administrativo{
  
     cpf TEXT PK
     nome TEXT
-    data_nascimento TEXT   
     cnis TEXT
     salario REAL
     email TEXT
     endereco TEXT
+    data_nascimento TEXT  
     genero_sexual TEXT
     carga_horaria_semanal INTEGER
+    tipo_funcao TEXT
 
 }
 
 insumo{
     
     codigo_barras TEXT PK
-    nome TEXT
-    quantidade INTEGER
     data_validade TEXT
     nome_fornecedor TEXT
-    cnpj_fornecer TEXT FK
+    cnpj_fornecedor TEXT FK
+    preco REAL
+    nome TEXT
+    quantidade INTEGER
 }
 
-hospital_cardeal ||--|| diretor_hospital: Tem_um
-hospital_cardeal ||--|{ departamento: Tem_Muitos
-hospital_cardeal ||--|{ fornecedor: Tem_Muitos
-fornecedor }|--|{ insumo: Tem_muitos
-diretor_hospital ||--|{ departamento: Comanda_muitos
+hospital_cardeal ||--|| diretor_hospital: Tem
+hospital_cardeal ||--|{ departamento: Tem
+hospital_cardeal ||--|{ fornecedor: Contrata
+fornecedor }|--|{ insumo: Fornece
+diretor_hospital ||--|{ diretor_departamento: Comanda_muitos
 diretor_departamento ||--|| departamento: comanda_um
-departamento ||--|{ insumo: possui_muitos
-departamento ||--|{ medico: contrata_muitos
-departamento ||--|{ enfermeiro: contrata_muitos
-departamento ||--|{ farmaceutico: contrata_muitos
-departamento ||--|{ psicologo: contrata_muitos
-departamento ||--|{ fisioterapeuta: contrata_muitos
-departamento ||--|{ auxiliar_limpeza: contrata_muitos
-departamento ||--|{ auxiliar_administrativo: contrata_muitos
+departamento ||--|{ insumo: Possui
+departamento ||--|{ medico: Contrata
+departamento ||--|{ enfermeiro: Contrata
+departamento ||--|{ farmaceutico: Contrata
+departamento ||--|{ psicologo: Contrata
+departamento ||--|{ fisioterapeuta: Contrata
+departamento ||--|{ auxiliar_limpeza: Contrata
+departamento ||--|{ auxiliar_administrativo: Contrata
 ```
