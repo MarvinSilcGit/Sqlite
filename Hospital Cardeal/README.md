@@ -4,69 +4,30 @@
 ```mermaid
 ---
 config:
-  theme: forest
+  theme: dark
 ---
-
 erDiagram
 
 diretor_hospital{
-    
     cpf_diretor TEXT PK
     nome TEXT
     cnis TEXT
     data_nascimento TEXT
+    logradouro TEXT
+    municipio TEXT
+    complemento TEXT
+    cep TEXT
+    bairro TEXT
+    numero_residencia TEXT
+    email TEXT
+    telefone TEXT
+    carga_horaria_semanal REAL
     salario REAL
-    logradouro TEXT
-    municipio TEXT
-    complemento TEXT
-    cep TEXT
-    bairro TEXT
-    numero TEXT
-    email TEXT
+    beneficios_adicionais REAL
 }
 
-hospital_cardeal{ 
-    
-    cnpj_hospital TEXT PK
-    razao_social TEXT
-    nome_fantasia TEXT
-    faturamento_mensal REAL
-    gasto_mensal REAL
-    logradouro TEXT
-    municipio TEXT
-    complemento TEXT
-    cep TEXT
-    bairro TEXT
-    numero TEXT
-    email TEXT
-}
-
-fornecedor{ 
-    
-    cnpj_fornecedor TEXT PK
-    porte TEXT
-    razao_social TEXT
-    nome_fantasia TEXT
-    codigo_natureza_juridica TEXT
-    codigo_atividade_economica TEXT
-    logradouro TEXT
-    municipio TEXT
-    complemento TEXT
-    cep TEXT
-    bairro TEXT
-    numero TEXT
-    email TEXT
-}
-
-departamento{
-    
-    nome_departamento TEXT PK
-    orcamento REAL
-}
-
-diretor_departamento{
-    
-    cpf_diretor_departamento TEXT PK
+coordenador_setorial{
+    cpf_coordenador_setorial TEXT PK
     nome TEXT
     cnis TEXT
     email TEXT
@@ -77,41 +38,63 @@ diretor_departamento{
     complemento TEXT
     cep TEXT
     bairro TEXT
-    numero TEXT
+    numero_residencia TEXT
     email TEXT
+    telefone TEXT
+    carga_horaria_semanal REAL
+    salario REAL
+    beneficios_adicionais REAL
+}
+
+
+departamento{
+    nome_departamento TEXT PK
+    orcamento REAL
+    cpf_coordenador_setorial TEXT FK
 }
 
 funcionario{
-    
     cpf TEXT PK
     nome TEXT
     data_nascimento TEXT   
     cnis TEXT
     pis_pasep TEXT
+    cargo TEXT
     genero_sexual TEXT
     formacao_educacional TEXT
     especializacao_educacional TEXT
-    cargo TEXT
     codigo_conselho_regional TEXT
-    carga_horaria_semanal INTEGER
-    adicional_insalubridade REAL
-    salario REAL
     logradouro TEXT
     municipio TEXT
     complemento TEXT
     cep TEXT
     bairro TEXT
-    numero TEXT
+    numero_residencia TEXT
     email TEXT
+    telefone TEXT
+    carga_horaria_semanal REAL
+    adicional_insalubridade REAL
+    salario REAL
+    beneficios_adicionais REAL
+    nome_departamento TEXT FK
 }
 
 pedido_compra{
-
     id_pedido INTEGER PK
-    data_pedido TEXT
-    
+    data_envio_pedido TEXT
+    data_recebimento_pedido TEXT
+    cnpj_fornecedor TEXT
+    cnae_fornecedor TEXT
+    email TEXT
+    telefone TEXT
+    custo_total REAL
+    custo_unitario REAL
+    cpf_coordenador_setorial TEXT FK
+
 }
 
-departamento ||--|{ funcionario: Contrata
-departamento ||--|{pedido_compra: Faz
+diretor_hospital ||--|{ coordenador_setorial: Contrata
+coordenador_setorial ||--|{ pedido_compra: Faz
+coordenador_setorial ||--|| departamento: Coordena
+departamento ||--|{ funcionario: Possui
 ```
