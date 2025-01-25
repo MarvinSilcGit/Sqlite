@@ -9,9 +9,13 @@ config:
 
 erDiagram
 
-endereco{
+diretor_hospital{
     
-    endereco_id INTEGER PK
+    cpf_diretor TEXT PK
+    nome TEXT
+    cnis TEXT
+    data_nascimento TEXT
+    salario REAL
     logradouro TEXT
     municipio TEXT
     complemento TEXT
@@ -21,16 +25,6 @@ endereco{
     email TEXT
 }
 
-diretor_hospital{
-    
-    cpf_diretor TEXT PK
-    nome TEXT
-    cnis TEXT
-    data_nascimento TEXT
-    endereco_id INTEGER FK
-    salario REAL
-}
-
 hospital_cardeal{ 
     
     cnpj_hospital TEXT PK
@@ -38,8 +32,13 @@ hospital_cardeal{
     nome_fantasia TEXT
     faturamento_mensal REAL
     gasto_mensal REAL
-    endereco_id INTEGER FK
-    cpf_diretor TEXT FK
+    logradouro TEXT
+    municipio TEXT
+    complemento TEXT
+    cep TEXT
+    bairro TEXT
+    numero TEXT
+    email TEXT
 }
 
 fornecedor{ 
@@ -50,13 +49,18 @@ fornecedor{
     nome_fantasia TEXT
     codigo_natureza_juridica TEXT
     codigo_atividade_economica TEXT
-    endereco_id INTEGER FK
+    logradouro TEXT
+    municipio TEXT
+    complemento TEXT
+    cep TEXT
+    bairro TEXT
+    numero TEXT
+    email TEXT
 }
 
 departamento{
     
     nome_departamento TEXT PK
-    cpf_diretor_departamento TEXT FK
     orcamento REAL
 }
 
@@ -67,8 +71,14 @@ diretor_departamento{
     cnis TEXT
     email TEXT
     data_nascimento TEXT
-    endereco_id INTEGER FK
     salario REAL
+    logradouro TEXT
+    municipio TEXT
+    complemento TEXT
+    cep TEXT
+    bairro TEXT
+    numero TEXT
+    email TEXT
 }
 
 funcionario{
@@ -86,43 +96,22 @@ funcionario{
     carga_horaria_semanal INTEGER
     adicional_insalubridade REAL
     salario REAL
-    endereco_id INTEGER FK
-    nome_departamento TEXT FK
-}
-
-
-insumo{
-    
-    codigo_barras TEXT PK
-    data_validade TEXT
-    data_fabricacao TEXT
-    nome_fornecedor TEXT
-    nome TEXT
-    preco_unitario REAL
-    quantidade INTEGER
-    cnpj_fornecedor TEXT FK
-    id_pedido INTEGER FK
+    logradouro TEXT
+    municipio TEXT
+    complemento TEXT
+    cep TEXT
+    bairro TEXT
+    numero TEXT
+    email TEXT
 }
 
 pedido_compra{
 
     id_pedido INTEGER PK
     data_pedido TEXT
-    nome_departamento TEXT FK
     
 }
 
-hospital_cardeal ||--|| diretor_hospital: Tem
-hospital_cardeal ||--|{ fornecedor: Contrata
-hospital_cardeal ||--|| endereco: Possui
-diretor_hospital ||--|{ diretor_departamento: Comanda
-diretor_hospital ||--|| endereco: Possui
-fornecedor ||--|{ insumo: Fornece
-fornecedor ||--|| endereco: Possui
-diretor_departamento ||--|| departamento: Direciona
-diretor_departamento ||--|| endereco: Possuir
 departamento ||--|{ funcionario: Contrata
-departamento ||--|{ pedido_compra: Faz
-pedido_compra ||--|{ fornecedor: Requisita
-funcionario ||--|| endereco: Possui
+departamento ||--|{pedido_compra: Faz
 ```
