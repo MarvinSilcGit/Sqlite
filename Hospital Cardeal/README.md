@@ -2,189 +2,94 @@
 
 
 ```mermaid
+---
+config:
+  theme: forest
+---
+
 erDiagram
 
-
-hospital_cardeal{ 
+endereco{
     
-    cnpj_hospital TEXT PK
+    endereco_id INTEGER PK
     logradouro TEXT
     municipio TEXT
     complemento TEXT
     cep TEXT
     bairro TEXT
     numero TEXT
-    telefone TEXT
     email TEXT
-    quantidade_departamento INTEGER
+}
+
+diretor_hospital{
+    
+    cpf_diretor TEXT PK
+    nome TEXT
+    cnis TEXT
+    data_nascimento TEXT
+    endereco_id INTEGER FK
+    salario REAL
+}
+
+hospital_cardeal{ 
+    
+    cnpj_hospital TEXT PK
     razao_social TEXT
     nome_fantasia TEXT
-    cnpj_fornecedor TEXT FK
+    faturamento_mensal REAL
+    gasto_mensal REAL
+    endereco_id INTEGER FK
     cpf_diretor TEXT FK
-
 }
 
 fornecedor{ 
     
     cnpj_fornecedor TEXT PK
-    logradouro TEXT
-    municipio TEXT
-    complemento TEXT
-    cep TEXT
-    bairro TEXT
-    numero TEXT
-    telefone TEXT
-    email TEXT
     porte TEXT
     razao_social TEXT
     nome_fantasia TEXT
     codigo_natureza_juridica TEXT
     codigo_atividade_economica TEXT
- 
-}
-
-diretor_hospital{
-		
-    cpf_diretor TEXT PK
-    nome TEXT
-    salario REAL
-    cnis TEXT
-    email TEXT
-    endereco TEXT
-	data_nascimento TEXT
-
+    endereco_id INTEGER FK
 }
 
 departamento{
-	
+    
     nome_departamento TEXT PK
+    cpf_diretor_departamento TEXT FK
     orcamento REAL
-    diretor_departamento TEXT
-    quantidade_funcionarios INTEGER
-		
 }
 
 diretor_departamento{
     
-    cpf_diretor_departamento TEXT
+    cpf_diretor_departamento TEXT PK
     nome TEXT
-    salario REAL
     cnis TEXT
     email TEXT
-    endereco TEXT
     data_nascimento TEXT
+    endereco_id INTEGER FK
+    salario REAL
+}
+
+funcionario{
     
-}
-
-medico{
-    
     cpf TEXT PK
     nome TEXT
     data_nascimento TEXT   
     cnis TEXT
-    salario REAL
-    email TEXT
-    endereco TEXT
-    codigo_crm TEXT
+    pis_pasep TEXT
     genero_sexual TEXT
-    especializacao TEXT
+    formacao_educacional TEXT
+    especializacao_educacional TEXT
+    cargo TEXT
+    codigo_conselho_regional TEXT
     carga_horaria_semanal INTEGER
-    
+    adicional_insalubridade REAL
+    salario REAL
+    endereco_id INTEGER FK
+    nome_departamento TEXT FK
 }
 
-enfermeiro{ 
- 
-    cpf TEXT PK
-    nome TEXT
-    data_nascimento TEXT   
-    cnis TEXT
-    salario REAL
-    email TEXT
-    endereco TEXT
-    codigo_coren TEXT
-    genero_sexual TEXT
-    especializacao TEXT
-    carga_horaria_semanal INTEGER
-
-}
-
-farmaceutico{ 
- 
-    cpf TEXT PK
-    nome TEXT
-    data_nascimento TEXT   
-    cnis TEXT
-    salario REAL
-    email TEXT
-    endereco TEXT
-    codigo_crf TEXT
-    genero_sexual TEXT
-    especializacao TEXT
-    carga_horaria_semanal INTEGER
-
-}
-
-psicologo{ 
- 
-    cpf TEXT PK
-    nome TEXT
-    data_nascimento TEXT   
-    cnis TEXT
-    salario REAL
-    email TEXT
-    endereco TEXT
-    codigo_crp TEXT
-    genero_sexual TEXT
-    especializacao TEXT
-    carga_horaria_semanal INTEGER
-
-}
-
-fisioterapeuta{ 
- 
-    cpf TEXT PK
-    nome TEXT
-    data_nascimento TEXT   
-    cnis TEXT
-    salario REAL
-    email TEXT
-    endereco TEXT
-    codigo_crefito TEXT
-    genero_sexual TEXT
-    especializacao TEXT
-    carga_horaria_semanal INTEGER
-
-}
-
-auxiliar_limpeza{ 
- 
-    cpf TEXT PK
-    nome TEXT
-    cnis TEXT
-    salario REAL
-    email TEXT
-    endereco TEXT
-    data_nascimento TEXT
-    genero_sexual TEXT
-    carga_horaria_semanal INTEGER
-    tipo_funcao TEXT
-
-}
-
-auxiliar_administrativo{ 
- 
-    cpf TEXT PK
-    nome TEXT
-    cnis TEXT
-    salario REAL
-    email TEXT
-    endereco TEXT
-    data_nascimento TEXT  
-    genero_sexual TEXT
-    carga_horaria_semanal INTEGER
-    tipo_funcao TEXT
-
-}
 
 insumo{
     
@@ -192,25 +97,32 @@ insumo{
     data_validade TEXT
     data_fabricacao TEXT
     nome_fornecedor TEXT
-    preco REAL
     nome TEXT
+    preco_unitario REAL
     quantidade INTEGER
     cnpj_fornecedor TEXT FK
+    id_pedido INTEGER FK
+}
+
+pedido_compra{
+
+    id_pedido INTEGER PK
+    data_pedido TEXT
     nome_departamento TEXT FK
+    
 }
 
 hospital_cardeal ||--|| diretor_hospital: Tem
-hospital_cardeal ||--|{ departamento: Tem
 hospital_cardeal ||--|{ fornecedor: Contrata
-fornecedor ||--|{ insumo: Fornece
+hospital_cardeal ||--|| endereco: Possui
 diretor_hospital ||--|{ diretor_departamento: Comanda
-diretor_departamento ||--|| departamento: Comanda
-departamento ||--|{ insumo: Possui
-departamento ||--|{ medico: Contrata
-departamento ||--|{ enfermeiro: Contrata
-departamento ||--|{ farmaceutico: Contrata
-departamento ||--|{ psicologo: Contrata
-departamento ||--|{ fisioterapeuta: Contrata
-departamento ||--|{ auxiliar_limpeza: Contrata
-departamento ||--|{ auxiliar_administrativo: Contrata
+diretor_hospital ||--|| endereco: Possui
+fornecedor ||--|{ insumo: Fornece
+fornecedor ||--|| endereco: Possui
+diretor_departamento ||--|| departamento: Direciona
+diretor_departamento ||--|| endereco: Possuir
+departamento ||--|{ funcionario: Contrata
+departamento ||--|{ pedido_compra: Faz
+pedido_compra ||--|{ fornecedor: Requisita
+funcionario ||--|| endereco: Possui
 ```
