@@ -9,10 +9,15 @@ config:
 erDiagram
 
 diretor_hospital{
-    cpf_diretor TEXT PK
+    
+    cpf TEXT PK
     nome TEXT
-    cnis TEXT
     data_nascimento TEXT
+    cnis TEXT
+    pis_pasep TEXT
+    genero_sexual TEXT
+    formacao_educacional TEXT
+    especializacao_educacional TEXT
     logradouro TEXT
     municipio TEXT
     complemento TEXT
@@ -23,16 +28,19 @@ diretor_hospital{
     telefone TEXT
     carga_horaria_semanal REAL
     salario REAL
-    beneficios_adicionais REAL
+    valor_beneficios_adicionais REAL
 }
 
 coordenador_setorial{
-    cpf_coordenador_setorial TEXT PK
+    
+    cpf TEXT PK
     nome TEXT
-    cnis TEXT
-    email TEXT
     data_nascimento TEXT
-    salario REAL
+    cnis TEXT
+    pis_pasep TEXT
+    genero_sexual TEXT
+    formacao_educacional TEXT
+    especializacao_educacional TEXT
     logradouro TEXT
     municipio TEXT
     complemento TEXT
@@ -43,14 +51,14 @@ coordenador_setorial{
     telefone TEXT
     carga_horaria_semanal REAL
     salario REAL
-    beneficios_adicionais REAL
+    valor_beneficios_adicionais REAL
 }
 
 
-departamento{
-    nome_departamento TEXT PK
+setor{
+    nome TEXT PK
     orcamento REAL
-    cpf_coordenador_setorial TEXT FK
+    cpf TEXT FK
 }
 
 funcionario{
@@ -75,7 +83,7 @@ funcionario{
     carga_horaria_semanal REAL
     adicional_insalubridade REAL
     salario REAL
-    beneficios_adicionais REAL
+    valor_beneficios_adicionais REAL
     nome_departamento TEXT FK
 }
 
@@ -95,6 +103,6 @@ pedido_compra{
 
 diretor_hospital ||--|{ coordenador_setorial: Contrata
 coordenador_setorial ||--|{ pedido_compra: Faz
-coordenador_setorial ||--|| departamento: Coordena
-departamento ||--|{ funcionario: Possui
+coordenador_setorial ||--|| setor: Coordena
+setor ||--|{ funcionario: Possui
 ```
