@@ -33,7 +33,7 @@ diretor_hospital{
 
 coordenador_setorial{
     
-    cpf TEXT PK
+    cpf_coordenador TEXT PK
     nome TEXT
     data_nascimento TEXT
     cnis TEXT
@@ -58,7 +58,9 @@ coordenador_setorial{
 setor{
     nome TEXT PK
     orcamento REAL
-    cpf TEXT FK
+    numero_pedidos INTEGER
+    custo_pedidos REAL
+    cpf_coordenador TEXT FK
 }
 
 funcionario{
@@ -84,7 +86,7 @@ funcionario{
     adicional_insalubridade REAL
     salario REAL
     valor_beneficios_adicionais REAL
-    nome_departamento TEXT FK
+    nome_setor TEXT FK
 }
 
 pedido_compra{
