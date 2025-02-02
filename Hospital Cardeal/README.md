@@ -29,6 +29,7 @@ diretor_hospital{
     carga_horaria_semanal REAL
     salario REAL
     valor_beneficios_adicionais REAL
+    data_encerramento_contrato TEXT
 }
 
 coordenador_setorial{
@@ -52,6 +53,7 @@ coordenador_setorial{
     carga_horaria_semanal REAL
     salario REAL
     valor_beneficios_adicionais REAL
+    data_encerramento_contrato TEXT
 }
 
 
@@ -86,6 +88,7 @@ funcionario{
     adicional_insalubridade REAL
     salario REAL
     valor_beneficios_adicionais REAL
+    data_encerramento_contrato TEXT
     nome_setor TEXT FK
 }
 
